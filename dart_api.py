@@ -174,7 +174,11 @@ def fetch_stock_info(corp_name: str) -> dict | None:
         if not industry:
             industry = info.get("industry")
 
-        current_price = info.get("currentPrice") or info.get("regularMarketPrice")
+        current_price = (
+            info.get("currentPrice")
+            or info.get("regularMarketPrice")
+            or info.get("regularMarketPreviousClose")  # 장 마감 후 fallback
+        )
         if current_price is None:
             return None
 
